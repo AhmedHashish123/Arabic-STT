@@ -1,2 +1,4 @@
-whisper_fine-tuned/wandb
+__pycache__
 *.wav
+.vscode
+whisper_fine-tuned/wandb
