@@ -11,15 +11,19 @@ def enhance_audio(file_path, output_path):
     # Noise reduction
     reduced_noise_audio = nr.reduce_noise(y=audio_data, sr=sample_rate)
 
-    # Simple equalization (high-pass filter to remove low-frequency noise)
-    sos = scipy.signal.butter(10, 100, 'hp', fs=sample_rate, output='sos')
+    # Gentle equalization (high-pass filter with a lower cutoff frequency)
+    # Lower cutoff frequency to preserve lower frequencies in the voice
+    sos = scipy.signal.butter(10, 80, 'hp', fs=sample_rate, output='sos')  # Reduced from 100 to 80 Hz to take into consideration the low noises
     filtered_audio = scipy.signal.sosfilt(sos, reduced_noise_audio)
 
+    # Normalization (increase volume to a target peak level)
+    peak_norm_audio = librosa.util.normalize(filtered_audio, norm=np.inf, axis=0)
+
     # Save the enhanced audio
-    sf.write(output_path, reduced_noise_audio, sample_rate)
+    sf.write(output_path, peak_norm_audio, sample_rate)
 
 # Usage
 input_audio_path = 'r1.wav'  # Replace with your audio file path
-output_audio_path = 'r_new.wav'  # Output file path
+output_audio_path = 'r.wav'  # Output file path
 
 enhance_audio(input_audio_path, output_audio_path)
