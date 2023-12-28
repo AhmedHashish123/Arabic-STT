@@ -33,8 +33,8 @@ def load_wav2vec_model():
     """
     Loads the wav2vec2.0 model and processor
     """
-    processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
-    model = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
+    processor = Wav2Vec2Processor.from_pretrained("othrif/wav2vec2-large-xlsr-arabic")
+    model = Wav2Vec2Model.from_pretrained("othrif/wav2vec2-large-xlsr-arabic")
     return processor, model
 
 def wav2vec_feature_extraction(audio_input, processor, model):
@@ -42,9 +42,25 @@ def wav2vec_feature_extraction(audio_input, processor, model):
     Extracts wav2vec2.0 features from the audio file
     """
     # Process for model input
-    input_values = processor(audio_input, return_tensors="pt", sampling_rate = 16000).input_values
+    input_values = processor(audio_input.squeeze(), sampling_rate=16000, return_tensors="pt").input_values.squeeze()
+    print(len(input_values))
+    print(input_values)
+    print(input_values.shape)
+    input_values_2 = processor(audio_input, sampling_rate=16000, return_tensors="pt").input_values
+    print(len(input_values_2))
+    print(input_values_2)
+    print(input_values_2.shape)
+    print(type(input_values_2))
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    # Freeze Wav2Vec model parameters
+    for param in model.parameters():
+        param.requires_grad = False
     # Get features
     with torch.no_grad():
-        features = model(input_values).last_hidden_state
+        model.eval()
+        print(model(input_values_2).keys())
+        print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+        features = model(input_values_2).last_hidden_state
+        print(features.shape)
 
     return features

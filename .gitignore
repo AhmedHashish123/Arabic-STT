@@ -1,4 +1,4 @@
 __pycache__
 *.wav
 .vscode
-whisper_fine-tuned/wandb
+src/models/whisper_fine-tuned/wandb
