@@ -109,7 +109,7 @@ model.config.suppress_tokens = []
 
 from transformers import Seq2SeqTrainingArguments
 training_args = Seq2SeqTrainingArguments(
-    output_dir="/whisper-tiny-ar",
+    output_dir="whisper-tiny-ar",
     per_device_train_batch_size=16, # batch size for training per GPU/CPU
     learning_rate=1e-5,
     warmup_steps=500, # linear warmup (from 0 to learning_rate)
