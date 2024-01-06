@@ -3,5 +3,5 @@ from app.AudioRecorderApp import AudioRecorderApp
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = AudioRecorderApp(root, "data/test.xls")
+    app = AudioRecorderApp(root, "data/test.xlsx")
     root.mainloop()

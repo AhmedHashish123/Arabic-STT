@@ -6,14 +6,14 @@ import wave
 from time import time
 from datetime import datetime  
 from utils.FileHandler import FileHandler
-from models.STTBase import STTBase
+from models.whisper_fine_tuned.STTWhisper import STTWhisper
 FILE_PATH = "data/recordings/"
 
 
 class AudioRecorderApp:
     def __init__(self, master, filename):
         self.file = FileHandler(filename)
-        self.model = STTBase()
+        self.model = STTWhisper()
         self.master = master
         self.master.title("Audio Recorder")
         self.master.protocol("WM_DELETE_WINDOW", self.cleanup_handler)
@@ -70,7 +70,7 @@ class AudioRecorderApp:
                 print(status, flush=True)
             self.audio_data.append(indata.copy())
 
-        self.stream = sd.InputStream(callback=callback, channels=2)
+        self.stream = sd.InputStream(callback=callback, channels=1, samplerate=16000)
         self.stream.start()
 
     def stop_record(self):
@@ -79,24 +79,36 @@ class AudioRecorderApp:
 
         self.stream.stop()
 
-        transcribed_text = self.model.transcribe(self.audio_data)
-        self.file.update_marks(transcribed_text, 10)
+        
         
         date_time = datetime.fromtimestamp(time())
         str_date_time = date_time.strftime("%d-%m-%Y_%H-%M-%S")
         filename = FILE_PATH + str_date_time + ".wav"
 
-        self.save_audio(filename, np.vstack(self.audio_data))
+        self.save_audio(filename, np.vstack(self.audio_data), sample_rate=16000)
         
         print(f"Audio saved as {filename}")
+
+        transcribed_text = self.model.transcribe(filename)
+
+        parts = transcribed_text.rsplit(' ', 1)
+
+        transcribed_name = parts[0]
+        transcribed_mark = parts[1]
+
+        try:
+            self.file.update_marks(transcribed_name, transcribed_mark)
+        except ValueError as e:
+            transcribed_text += "\n" + str(e)
+
         self.additional_text_var.set(transcribed_text)
         
         self.audio_data = []
 
-    def save_audio(self, filename, audio_data, sample_rate=44100):
+    def save_audio(self, filename, audio_data, sample_rate=16000):
         audio_data = np.int16(audio_data * 32767)  # Convert to 16-bit PCM format
         with wave.open(filename, "wb") as wf:
-            wf.setnchannels(2)
+            wf.setnchannels(1)
             wf.setsampwidth(2)
             wf.setframerate(sample_rate)
             wf.writeframes(audio_data.tobytes())
