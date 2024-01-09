@@ -313,7 +313,7 @@ def collate_fn(batch):
     return spectrograms, labels, input_lengths, label_lengths
 
 # Create a DataLoader
-batch_size = 8
+batch_size = 6
 train_loader = DataLoader(custom_data_set, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 validation_loader = DataLoader(custom_val_data_set, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 
@@ -416,10 +416,10 @@ import torch.optim as optim
 criterion = nn.CTCLoss(blank=len(vocabulary)).to(device)
 
 # Define the Optimizer
-optimizer = optim.Adam(custom_model_2.parameters(), lr=0.0005)
+optimizer = optim.Adam(custom_model_2.parameters(), lr=0.001)
 
 # Run the training
-epochs = 100  # Define the number of epochs
+epochs = 20  # Define the number of epochs
 train(custom_model_2, train_loader, validation_loader, criterion, optimizer, epochs, device)
 
 print(counter_inf)
