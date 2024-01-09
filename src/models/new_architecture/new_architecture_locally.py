@@ -33,21 +33,22 @@ fleurs_val = load_dataset("google/fleurs", "ar_eg", split="validation")
 # print(fleurs_train)
 
 def update_audio_path_train(data_item):
-    parts = data_item['path'].split('/')
+    parts = data_item['path'].split('\\')
     parts.insert(-1, 'train')
-    data_item['path'] = '/'.join(parts)
+    data_item['path'] = '\\'.join(parts)
     data_item['sentence'] = data_item['transcription']
     return data_item
+    return data_item
 def update_audio_path_test(data_item):
-    parts = data_item['path'].split('/')
+    parts = data_item['path'].split('\\')
     parts.insert(-1, 'test')
-    data_item['path'] = '/'.join(parts)
+    data_item['path'] = '\\'.join(parts)
     data_item['sentence'] = data_item['transcription']
     return data_item
 def update_audio_path_val(data_item):
-    parts = data_item['path'].split('/')
+    parts = data_item['path'].split('\\')
     parts.insert(-1, 'dev')
-    data_item['path'] = '/'.join(parts)
+    data_item['path'] = '\\'.join(parts)
     data_item['sentence'] = data_item['transcription']
     return data_item
 
@@ -418,7 +419,7 @@ criterion = nn.CTCLoss(blank=len(vocabulary)).to(device)
 optimizer = optim.Adam(custom_model_2.parameters(), lr=0.0005)
 
 # Run the training
-epochs = 10  # Define the number of epochs
+epochs = 100  # Define the number of epochs
 train(custom_model_2, train_loader, validation_loader, criterion, optimizer, epochs, device)
 
 print(counter_inf)
