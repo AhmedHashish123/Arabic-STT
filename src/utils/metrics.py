@@ -10,15 +10,9 @@ def calculate_wer(fleurs_test, model_1, model_2, model_3):
     hypothesis_1 = model_1.transcribe(fleurs_test[i]['path'])
     hypothesis_2 = model_2.transcribe(fleurs_test[i]['path'])
     hypothesis_3 = model_3.transcribe(fleurs_test[i]['path'])
-    print(hypothesis_1)
-    print(hypothesis_2)
-    print(hypothesis_3)
     wer_1 = wer(reference, hypothesis_1)
     wer_2 = wer(reference, hypothesis_2)
     wer_3 = wer(reference, hypothesis_3)
-    print(wer_1)
-    print(wer_2)
-    print(wer_3)
     total_wer_1 += wer_1
     total_wer_2 += wer_2
     total_wer_3 += wer_3

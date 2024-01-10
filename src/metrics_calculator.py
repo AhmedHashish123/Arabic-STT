@@ -4,7 +4,7 @@ from models.enhanced_wav2vec.STTEnhancedWav2Vec import STTEnhancedWav2Vec
 from models.new_architecture.STTNewArchitecture import STTNewArchitecture
 from utils.metrics import calculate_wer
 
-whisper_small = STTWhisper("tiny")
+whisper_small = STTWhisper("small")
 enhanced_wav2vec = STTEnhancedWav2Vec()
 new_architecture = STTNewArchitecture()
 
