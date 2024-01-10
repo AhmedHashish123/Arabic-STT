@@ -3,7 +3,7 @@ __pycache__
 .vscode
 m4.txt
 src/models/new_architecture/new_architecture.ipynb
-src/models/enhanced_wav2vecenhanced_wav2vec/enhanced_wav2vec.ipynb
+src/models/enhanced_wav2vec/enhanced_wav2vec.ipynb
 src/models/whisper_fine-tuned/wandb
 src/models/whisper_fine_tuned/whisper_inference.py
 src/models/whisper_fine_tuned/whisper_fine-tuned_locally.py
