@@ -22,13 +22,13 @@ class FileHandler:
     def get_embedding(self, text):
         inputs = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
         outputs = self.model(**inputs)
-        return outputs.last_hidden_state.mean(dim=1).squeeze().detach().numpy()  # Use squeeze() here
+        return outputs.last_hidden_state.mean(dim=1).squeeze().detach().numpy()
     
 
     def update_marks(self, name, new_mark):
         name_embedding = self.get_embedding(name)
         name_similarities = [1 - cosine(name_embedding, embedding) for embedding in self.name_embeddings]
-        print(name_similarities)
+        # print(name_similarities)
         max_name_similarity = max(name_similarities)
         if max_name_similarity < 0.65:
             raise ValueError("Name not found")
@@ -36,7 +36,7 @@ class FileHandler:
 
         number_embedding = self.get_embedding(str(new_mark))
         number_similarities = [1 - cosine(number_embedding, embedding) for embedding in self.numbers_embeddings]
-        print(number_similarities)
+        # print(number_similarities)
         max_similarity = max(number_similarities)
         if max_similarity < 0.6:
             raise ValueError("Number not found")
