@@ -7,7 +7,6 @@ src/models/enhanced_wav2vec/enhanced_wav2vec.ipynb
 src/models/whisper_fine-tuned/wandb
 src/models/whisper_fine_tuned/whisper_inference.py
 src/models/whisper_fine_tuned/whisper_fine-tuned_locally.py
-src/models/whisper_fine_tuned/whisper_fine-tuned.ipynb
 src/models/whisper_fine_tuned/tiny/vocab.json
 src/models/whisper_fine_tuned/tiny/training_args.bin
 src/models/whisper_fine_tuned/tiny/trainer_state.json
@@ -23,7 +22,6 @@ src/models/whisper_fine_tuned/tiny/merges.txt
 src/models/whisper_fine_tuned/tiny/generation_config.json
 src/models/whisper_fine_tuned/tiny/config.json
 src/models/whisper_fine_tuned/tiny/added_tokens.json
-src/models/whisper_fine_tuned/STTWhisper.py
 src/models/whisper_fine_tuned/small/vocab.json
 src/models/whisper_fine_tuned/small/training_args.bin
 src/models/whisper_fine_tuned/small/trainer_state.json
