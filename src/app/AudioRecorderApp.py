@@ -8,6 +8,7 @@ from datetime import datetime
 from utils.FileHandler import FileHandler
 from models.whisper_fine_tuned.STTWhisper import STTWhisper
 from models.enhanced_wav2vec.STTEnhancedWav2Vec import STTEnhancedWav2Vec
+from models.new_architecture.STTNewArchitecture import STTNewArchitecture
 FILE_PATH = "data/recordings/"
 
 
@@ -15,7 +16,8 @@ class AudioRecorderApp:
     def __init__(self, master, filename):
         self.file = FileHandler(filename)
         # self.model = STTWhisper()
-        self.model = STTEnhancedWav2Vec()
+        # self.model = STTEnhancedWav2Vec()
+        self.model = STTNewArchitecture()
         self.master = master
         self.master.title("Audio Recorder")
         self.master.protocol("WM_DELETE_WINDOW", self.cleanup_handler)
@@ -95,8 +97,12 @@ class AudioRecorderApp:
 
         parts = transcribed_text.rsplit(' ', 1)
 
-        transcribed_name = parts[0]
-        transcribed_mark = parts[1]
+        if len(parts) >= 2:
+            transcribed_name = parts[0]
+            transcribed_mark = parts[1]
+        else:
+            transcribed_name = transcribed_text
+            transcribed_mark = ""
 
         try:
             self.file.update_marks(transcribed_name, transcribed_mark)

@@ -50,7 +50,6 @@ class STTEnhancedWav2Vec(STTBase):
         self.model.to(self.device)
         self.model.eval()
         
-
     def select_outputs(self, outputs, blank_label):
         arg_maxes = torch.argmax(outputs, dim=2)
         print(arg_maxes.shape)
@@ -90,11 +89,3 @@ class STTEnhancedWav2Vec(STTBase):
         with open("m4.txt", 'w', encoding='utf-8') as file:
             file.write(decoded_text[0])
         return decoded_text[0]
-
-
-
-
-
-
-
-
