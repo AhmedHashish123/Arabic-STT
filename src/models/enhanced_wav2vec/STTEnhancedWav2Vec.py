@@ -52,7 +52,7 @@ class STTEnhancedWav2Vec(STTBase):
         
     def select_outputs(self, outputs, blank_label):
         arg_maxes = torch.argmax(outputs, dim=2)
-        print(arg_maxes.shape)
+        # print(arg_maxes.shape)
         decodes = []
         for i in range(arg_maxes.size(0)):
             decode = []
