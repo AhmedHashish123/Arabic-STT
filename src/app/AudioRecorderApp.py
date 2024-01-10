@@ -15,9 +15,9 @@ FILE_PATH = "data/recordings/"
 class AudioRecorderApp:
     def __init__(self, master, filename):
         self.file = FileHandler(filename)
-        # self.model = STTWhisper()
+        self.model = STTWhisper("small")
         # self.model = STTEnhancedWav2Vec()
-        self.model = STTNewArchitecture()
+        # self.model = STTNewArchitecture()
         self.master = master
         self.master.title("Audio Recorder")
         self.master.protocol("WM_DELETE_WINDOW", self.cleanup_handler)
@@ -88,7 +88,6 @@ class AudioRecorderApp:
         date_time = datetime.fromtimestamp(time())
         str_date_time = date_time.strftime("%d-%m-%Y_%H-%M-%S")
         filename = FILE_PATH + str_date_time + ".wav"
-
         self.save_audio(filename, np.vstack(self.audio_data), sample_rate=16000)
         
         print(f"Audio saved as {filename}")
