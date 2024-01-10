@@ -10,24 +10,15 @@ new_architecture = STTNewArchitecture()
 
 vocabulary = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي', 'ء', 'آ', 'أ', 'إ', 'ؤ', 'ئ', 'ة', 'ى', 'ﻻ', 'ﻷ', 'ﻹ', 'ﻵ',' ', '.']
 
-fleurs_val = load_dataset("google/fleurs", "ar_eg", split="validation")
+common_voice = load_dataset("mozilla-foundation/common_voice_13_0", "ar", split="train+validation+test")
 
-def update_audio_path_val(data_item):
-    parts = data_item['path'].split('\\')
-    parts.insert(-1, 'dev')
-    data_item['path'] = '\\'.join(parts)
-    data_item['sentence'] = data_item['transcription']
-    return data_item
-
-fleurs_val = fleurs_val.map(update_audio_path_val)
-
-fleurs_val = fleurs_val.remove_columns(["id", "num_samples", "audio", "transcription", "raw_transcription", "gender", "lang_id", "language", "lang_group_id"])
+common_voice = common_voice.remove_columns(["client_id", "audio", "up_votes", "down_votes", "age", "gender", "accent", "locale", "segment", "variant"])
 
 def process_transcriptions(data_item):
   new_sentence = ''.join([char for char in data_item["sentence"] if char in vocabulary])
   data_item["sentence"] = new_sentence
   return data_item
 
-fleurs_val = fleurs_val.map(process_transcriptions)
+common_voice = common_voice.map(process_transcriptions)
 
-calculate_wer(fleurs_val, whisper_small, enhanced_wav2vec, new_architecture)
+calculate_wer(common_voice, whisper_small, enhanced_wav2vec, new_architecture)
