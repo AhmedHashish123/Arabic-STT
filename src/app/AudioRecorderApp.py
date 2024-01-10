@@ -7,13 +7,15 @@ from time import time
 from datetime import datetime  
 from utils.FileHandler import FileHandler
 from models.whisper_fine_tuned.STTWhisper import STTWhisper
+from models.enhanced_wav2vec.STTEnhancedWav2Vec import STTEnhancedWav2Vec
 FILE_PATH = "data/recordings/"
 
 
 class AudioRecorderApp:
     def __init__(self, master, filename):
         self.file = FileHandler(filename)
-        self.model = STTWhisper()
+        # self.model = STTWhisper()
+        self.model = STTEnhancedWav2Vec()
         self.master = master
         self.master.title("Audio Recorder")
         self.master.protocol("WM_DELETE_WINDOW", self.cleanup_handler)
