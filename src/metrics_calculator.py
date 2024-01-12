@@ -12,7 +12,7 @@ new_architecture = STTNewArchitecture()
 
 vocabulary = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي', 'ء', 'آ', 'أ', 'إ', 'ؤ', 'ئ', 'ة', 'ى', 'ﻻ', 'ﻷ', 'ﻹ', 'ﻵ',' ', '.']
 
-common_voice = load_dataset("mozilla-foundation/common_voice_13_0", "ar", split="test")
+common_voice = load_dataset("mozilla-foundation/common_voice_13_0", "ar", split="validation")
 
 common_voice = common_voice.remove_columns(["client_id", "audio", "up_votes", "down_votes", "age", "gender", "accent", "locale", "segment", "variant"])
 
